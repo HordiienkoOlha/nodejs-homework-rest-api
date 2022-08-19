@@ -44,10 +44,24 @@ const addContact = async ({ name, email, phone }) => {
     const contacts = await listContacts();
     const id = nanoid();
     const newContact = { id, name, email, phone };
-    console.log(newContact);
     const newContacts = JSON.stringify([...contacts, newContact], null, 2);
     await fs.writeFile(contactsPath, newContacts);
-    return newContacts;
+    return newContact;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+const updateContact = async (contactId, { name, email, phone }) => {
+  try {
+    const contacts = await listContacts();
+    const index = contacts.findIndex(({ id }) => id === contactId.toString());
+    if (index === -1) {
+      return null;
+    }
+    contacts[index] = { contactId, name, email, phone };
+    await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
+    return contacts[index];
   } catch (error) {
     console.log(error.message);
   }
@@ -58,4 +72,5 @@ module.exports = {
   getContactById,
   removeContact,
   addContact,
+  updateContact,
 };
