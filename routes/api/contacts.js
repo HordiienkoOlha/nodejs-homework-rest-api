@@ -11,28 +11,24 @@ const router = express.Router();
 
 router.get("/", ctrlWrapper(ctrl.getAll));
 
-router.get(
-  "/:contactId",
-  // isValidId,
-  ctrlWrapper(ctrl.getById)
-);
+router.get("/:contactId", isValidId, ctrlWrapper(ctrl.getById));
 
 router.post("/", validationBody(schemas.addSchema), ctrlWrapper(ctrl.add));
 
 router.put(
   "/:contactId",
-  //   isValidId,
+  isValidId,
   validationBody(schemas.addSchema),
   ctrlWrapper(ctrl.updateById)
 );
 
 router.patch(
   "/:contactId/favorite",
-  //   isValidId,
+  isValidId,
   validationBody(schemas.updateFavoriteSchema),
-  ctrlWrapper(ctrl.updateFavorite)
+  ctrlWrapper(ctrl.updateStatusContact)
 );
 
-router.delete("/:contactId", ctrlWrapper(ctrl.removeById));
+router.delete("/:contactId", isValidId, ctrlWrapper(ctrl.removeById));
 
 module.exports = router;
