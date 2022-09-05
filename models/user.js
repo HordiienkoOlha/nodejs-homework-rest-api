@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
-const bcrypt = require("bcryptjs");
+// const bcrypt = require("bcryptjs");
 
 const { handleSchemaValidationErrors } = require("../helpers");
 
@@ -30,9 +30,9 @@ const userSchema = new Schema(
 
 userSchema.post("save", handleSchemaValidationErrors);
 
-userSchema.methods.validatePassword = function (password) {
-  return bcrypt.compare(password, this.password);
-};
+// userSchema.methods.validatePassword = function (password) {
+//   return bcrypt.compare(password, this.password);
+// };
 
 const registerSchema = Joi.object({
   email: Joi.string().required(),
