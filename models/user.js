@@ -24,30 +24,40 @@ const userSchema = new Schema(
       String,
       default: "",
     },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    },
   },
   { versionKey: false, timestamps: true }
 );
 
 userSchema.post("save", handleSchemaValidationErrors);
 
-// userSchema.methods.validatePassword = function (password) {
-//   return bcrypt.compare(password, this.password);
-// };
-
 const registerSchema = Joi.object({
   email: Joi.string().required(),
   password: Joi.string().min(6).required(),
-  subscription: Joi.string(),
+  subscription: Joi.string()
+    .label("Subscription Type")
+    .valid("starter", "pro", "business")
+    .required(),
 });
 
 const loginSchema = Joi.object({
   email: Joi.string().required(),
   password: Joi.string().min(6).required(),
 });
+// const schemaSubscription = Joi.object({
+//   subscription: Joi.string()
+//     .label("Subscription Type")
+//     .valid("starter", "pro", "business")
+//     .required(),
+// });
 
 const schemas = {
   registerSchema,
   loginSchema,
+  // schemaSubscription,
 };
 
 const User = model("user", userSchema);
