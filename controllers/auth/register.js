@@ -5,7 +5,7 @@ const { User } = require("../../models/user");
 const { RequestError } = require("../../helpers");
 
 const register = async (req, res) => {
-  const { email, password, subsctiption } = req.body;
+  const { email, password, subscription } = req.body;
   const user = await User.findOne({ email });
   if (user) {
     throw RequestError(409, "Email in use");
@@ -14,7 +14,7 @@ const register = async (req, res) => {
   const result = await User.create({
     email,
     password: hashPassword,
-    subsctiption,
+    subscription,
   });
   res.status(201).json({
     email: result.email,

@@ -10,23 +10,29 @@ const { schemas } = require("../../models/user");
 
 const router = express.Router();
 
-// signup
+// sign up
 router.post(
   "/register",
   validationBody(schemas.registerSchema),
   ctrlWrapper(ctrl.register)
 );
 
-// signin
+// sign in
 router.post(
   "/login",
   validationBody(schemas.loginSchema),
   ctrlWrapper(ctrl.login)
 );
 
-// logout
+// logo ut
 router.get("/logout", authenticate, ctrlWrapper(ctrl.logout));
 
+// current user
+
 router.get("/current", authenticate, ctrlWrapper(ctrl.currentUser));
+
+// subscription
+
+router.patch("/users", authenticate, ctrlWrapper(ctrl.usersSubscription));
 
 module.exports = router;
