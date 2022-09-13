@@ -25,7 +25,7 @@ router.post(
 );
 
 // current user
-router.get("/current", authenticate, ctrlWrapper(ctrl.currentUser));
+router.get("/users/current", authenticate, ctrlWrapper(ctrl.currentUser));
 
 // subscription
 router.patch("/users", authenticate, ctrlWrapper(ctrl.usersSubscription));
